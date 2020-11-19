@@ -27,3 +27,4 @@ Lnet/mooctest/InsideTest net.mooctest.InsideTest.test10()V
 Lnet/mooctest/InsideTest net.mooctest.InsideTest.test18()V
 Lnet/mooctest/InsideTest net.mooctest.InsideTest.test19()V
 Lnet/mooctest/MoreTriangleTest net.mooctest.MoreTriangleTest.test07()V
+

@@ -4,3 +4,4 @@ Lnet/mooctest/PerimeterTest net.mooctest.PerimeterTest.test11()V
 Lnet/mooctest/PerimeterTest net.mooctest.PerimeterTest.test04()V
 Lnet/mooctest/AreaTest net.mooctest.AreaTest.test24()V
 Lnet/mooctest/AreaTest net.mooctest.AreaTest.test13()V
+
