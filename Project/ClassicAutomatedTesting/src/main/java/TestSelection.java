@@ -88,9 +88,9 @@ public class TestSelection {
         }
         classTestSelection();
 //        System.out.println(digraph.toString());
-        String fileName = "class";
-        Tools.writeDotFile(digraph, fileName);
-        Tools.generatePDF(fileName);
+//        String fileName = "class";
+//        Tools.writeDotFile(digraph, fileName);
+//        Tools.generatePDF(fileName);
 //        for(String s : selectionTest) System.out.println(s);
         Tools.writeTxtFile(selectionTest, "selection-class");
 //        System.out.println();
@@ -130,9 +130,9 @@ public class TestSelection {
             }
         }
 //        System.out.println(digraph.toString());
-        String fileName = "method";
-        Tools.writeDotFile(digraph, fileName);
-        Tools.generatePDF(fileName);
+//        String fileName = "method";
+//        Tools.writeDotFile(digraph, fileName);
+//        Tools.generatePDF(fileName);
 //        for(String s : selectionTest) System.out.println(s);
         Tools.writeTxtFile(selectionTest, "selection-method");
 //        System.out.println();
