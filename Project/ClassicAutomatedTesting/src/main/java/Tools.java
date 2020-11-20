@@ -31,6 +31,10 @@ public class Tools {
         Tools.projectName = projectName;
     }
 
+    /**
+     * get exclusion.txt path
+     * @return exclusion.txt path
+     */
     public static String getExPath(){
         try {
             Properties properties = WalaProperties.loadProperties();
@@ -40,7 +44,10 @@ public class Tools {
         }
         return null;
     }
-
+    /**
+     * get scope.txt path
+     * @return scope.txt path
+     */
     public static String getScopePath(){
         try {
             Properties properties = WalaProperties.loadProperties();
@@ -51,6 +58,10 @@ public class Tools {
         return null;
     }
 
+    /**
+     * read change_info.txt file and store the context in an ArrayList<String>
+     * @param path change_info.txt path
+     */
     public static void setChangeInfoFile(String path){
         try{
             BufferedReader in = new BufferedReader(new FileReader(path));
@@ -66,6 +77,11 @@ public class Tools {
 
     }
 
+    /**
+     * write ArrayList<String> into output file path
+     * @param testSelection the output context
+     * @param fileName file name, class or method
+     */
     public static void writeTxtFile(ArrayList<String> testSelection, String fileName){
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(fileName + ".txt"));
@@ -76,6 +92,11 @@ public class Tools {
         }
     }
 
+    /**
+     * write digraph into dot file
+     * @param digraph override toString() to output the right dot digraph
+     * @param fileName file name, class or method
+     */
     public static void writeDotFile(DependenceDigraph digraph, String fileName){
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(fileName + ".dot"));
@@ -86,6 +107,10 @@ public class Tools {
         }
     }
 
+    /**
+     * generate PDF file by dot file, it use cmd comment
+     * @param fileName file name, class or method
+     */
     public static void generatePDF(String fileName){
         try {
             Runtime.getRuntime().exec("dot -T pdf -o " + fileName +".pdf " + fileName + ".dot");
@@ -94,6 +119,12 @@ public class Tools {
         }
     }
 
+    /**
+     * load classes to scope by use recursion
+     * @param rootPath file path, the root path is target directory
+     * @param scope scope reference
+     * @throws Exception
+     */
     public static void loadClasses(String rootPath, AnalysisScope scope) throws Exception {
 
         File file = new File(rootPath);
@@ -111,6 +142,12 @@ public class Tools {
         }
     }
 
+    /**
+     * add string to an ArrayList<String> and ensure all elements in this list is unique
+     * @param selectionTest ArrayList<String>
+     * @param s the added string
+     * @return Have this string been in the ArrayList?
+     */
     public static boolean addString(ArrayList<String> selectionTest, String s){
         boolean isAdd = false;
         for (String str : selectionTest) {
@@ -124,6 +161,11 @@ public class Tools {
         return isAdd;
     }
 
+    /**
+     * test classes is correctly loaded in scope
+     * @param scope tested scope
+     * @throws ClassHierarchyException
+     */
     public static void testClassLoad(AnalysisScope scope) throws ClassHierarchyException {
         ClassHierarchy cha = ClassHierarchyFactory.makeWithRoot(scope);
         for (IClass iClass : cha) {
@@ -132,6 +174,10 @@ public class Tools {
         }
     }
 
+    /**
+     * test cha graph is correctly initialized
+     * @param chaCG cha graph
+     */
     public static void testCHACallGraph(CHACallGraph chaCG){
         String stats = CallGraphStats.getStats(chaCG);
         System.out.println(stats);

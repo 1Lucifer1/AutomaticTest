@@ -1,5 +1,9 @@
 public class MainEntry {
 
+    /**
+     *
+     * @param args args[0]: -m or -c, args[1]: target directory path, args[2]: change_info.txt path
+     */
     public static void main(String[] args){
         String targetPath = args[1];
         String changeInfoPath = args[2];

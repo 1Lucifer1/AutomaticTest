@@ -3,6 +3,11 @@ import com.ibm.wala.classLoader.ShrikeBTMethod;
 import java.util.ArrayList;
 
 public class DependenceDigraph {
+
+    // use this digraph, should call addNode first to store the element in digraph.
+    /**
+     * the node in digraph
+     */
     class DigraphNode{
         String signature = "";
         ArrayList<Integer> next = new ArrayList<Integer>();
@@ -18,6 +23,11 @@ public class DependenceDigraph {
 
     private final ArrayList<DigraphNode> digraph = new ArrayList<DigraphNode>();
 
+    /**
+     * add node into digraph and ensure all elements in this list is unique
+     * @param signature added node name
+     * @return Have this string been in the ArrayList?
+     */
     public int addNode(String signature){
         boolean isAdd = false;
         int index = getIndex(signature);
@@ -30,10 +40,20 @@ public class DependenceDigraph {
         }
     }
 
+    /**
+     * add method to a node
+     * @param signature node name
+     * @param method added method
+     */
     public void addMethod(String signature, ShrikeBTMethod method){
         digraph.get(getIndex(signature)).methods.add(method);
     }
 
+    /**
+     * get the element index in digraph, if can't find, return -1
+     * @param signature the element name
+     * @return index
+     */
     public int getIndex(String signature){
         int res = -1;
         for (DigraphNode digraphNode : digraph) {
@@ -44,6 +64,13 @@ public class DependenceDigraph {
         }
         return res;
     }
+
+    /**
+     * add classes which call this class
+     * @param signature the element name
+     * @param next the index of the added classes
+     * @return Have this string been in the ArrayList?
+     */
     public boolean addNext(String signature, int next){
         boolean isAdd = false;
         DigraphNode node = digraph.get(getIndex(signature));
@@ -57,6 +84,10 @@ public class DependenceDigraph {
         return isAdd;
     }
 
+    /**
+     * output graph by dot file form
+     * @return string to write in dot file
+     */
     @Override
     public String toString() {
         StringBuilder res;

@@ -26,6 +26,11 @@ public class TestSelection {
     private final ArrayList<String> selectionTest = new ArrayList<String>();
     private final ArrayList<String> selectHis = new ArrayList<String>();
 
+    /**
+     * initialize scope and load all classes in target to scope
+     * @param targetPath target directory path
+     * @return
+     */
     public AnalysisScope getScope(String targetPath){
         try{
             String exPath = Tools.getExPath();
@@ -39,6 +44,10 @@ public class TestSelection {
         return null;
     }
 
+    /**
+     * initialize cha graph
+     * @param scope scope
+     */
     public void initGraph(AnalysisScope scope){
         try{
             // 1.生成类层次关系对象
@@ -69,6 +78,9 @@ public class TestSelection {
 //
 //    }
 
+    /**
+     * analyze all methods in classes and draw classes graph, then find class test selection
+     */
     public void classAnalysis(){
         // 4.遍历cg中所有的节点
         for (CGNode node : chaCallGraph){
@@ -96,7 +108,13 @@ public class TestSelection {
 //        System.out.println();
     }
 
+    /**
+     * draw class graph by get node's declaring class and node's previous nodes' declaring class
+     * @param node the node to get previous nodes
+     */
     private void drawClassGraph(CGNode node){
+
+        // get previous nodes iterator (previous node is methods those call this method)
         Iterator<CGNode> it =  chaCallGraph.getPredNodes(node);
         ShrikeBTMethod method = (ShrikeBTMethod) node.getMethod();
         digraph.addNode(method.getDeclaringClass().getName().toString());
@@ -114,6 +132,9 @@ public class TestSelection {
         }
     }
 
+    /**
+     * analyze all methods in classes and draw method graph, then find method test selection
+     */
     public void methodAnalysis(){
         for (CGNode node : chaCallGraph){
 
@@ -138,6 +159,10 @@ public class TestSelection {
 //        System.out.println();
     }
 
+    /**
+     * draw class graph by get node's previous nodes
+     * @param node the node to get previous nodes
+     */
     private void drawMethodGraph(CGNode node){
         Iterator<CGNode> it =  chaCallGraph.getPredNodes(node);
         ShrikeBTMethod method = (ShrikeBTMethod) node.getMethod();
@@ -153,6 +178,11 @@ public class TestSelection {
         }
     }
 
+    /**
+     * if the method was changed, then the test methods which call it was been added in the method selection.
+     * @param method check this method was changed
+     * @param node the node while can get @param method
+     */
     private void methodTestSelection(ShrikeBTMethod method, CGNode node){
 //        String classInnerName = method.getDeclaringClass().getName().toString();
         // 获取方法签名
@@ -166,6 +196,10 @@ public class TestSelection {
 //        System.out.println(classInnerName + " " + signature);
     }
 
+    /**
+     * the recursion to add selected test methods result ArrayList<String>
+     * @param node method to add in
+     */
     private void methodSelection(CGNode node){
 //        System.out.println(((ShrikeBTMethod) node.getMethod()).getSignature());
         if(Tools.addString(selectHis, ((ShrikeBTMethod) node.getMethod()).getSignature())) return;
@@ -179,6 +213,9 @@ public class TestSelection {
         }
     }
 
+    /**
+     * if the class was changed, then the test methods which its class call it was been added in the method selection.
+     */
     private void classTestSelection(){
         for(String s : Tools.changeInfoFile){
             String[] str = s.split(" ");
@@ -191,6 +228,10 @@ public class TestSelection {
         }
     }
 
+    /**
+     * add all class which was called these class methods
+     * @param node the class which was changed
+     */
     private void classSelection(DependenceDigraph.DigraphNode node){
 
         for(int i : node.next){
@@ -209,8 +250,8 @@ public class TestSelection {
 
     /**
      * If method have test annotation, return true.
-     * @param method
-     * @return
+     * @param method the tested method
+     * @return Does having @Test annotation
      */
     private boolean isTest(ShrikeBTMethod method){
         Collection<Annotation> annotations = method.getAnnotations();
